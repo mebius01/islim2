@@ -196,7 +196,7 @@ hr{
 .control input{
   border: 1px solid #B1B8BB;
   width: 570px;
-  height: 35px;
+  height: 34px;
 }
 .control select, .control button{
   border: 1px solid #B1B8BB;
@@ -205,11 +205,13 @@ hr{
   color: #B1B8BB;
 }
 .control select{
+  border-right: none;
   border-radius: 4px 0px 0px 4px;
   background-color: #ffffff;
   width: 113px;
 }
 .control button{
+  border-left: none;
   border-radius: 0px 4px 4px 0px;
   width: 97px;
 }
