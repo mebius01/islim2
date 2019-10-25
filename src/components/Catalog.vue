@@ -3,25 +3,25 @@
     <aside>
       <div class="filters">
         <div class="price">
-            <span class="name_filter">Price</span>
-            <form action="" name="price">
+          <span class="name_filter">Price</span>
+          <form action="" name="price">
             <input class="min" type="text" placeholder="min">
             <input class="max" type="text" placeholder="max">
             <input type="range" name="points" min="0" max="10">
-            </form>
+          </form>
         </div>
         <div class="gender">
-            <span class="name_filter">Gender</span>
-            <br>
-            <label class="date_filter">Man
+          <span class="name_filter">Gender</span>
+          <br>
+          <label class="date_filter">Man
             <input type="checkbox"  v-model="gender" value="man">
             <span class="checkmark"></span>
-            </label>
-            <br>
-            <label class="date_filter">Woman <span class="count">(118)</span>
+          </label>
+          <br>
+          <label class="date_filter">Woman <span class="count">(118)</span>
             <input type="checkbox"  v-model="gender" value="woman">
             <span class="checkmark"></span>
-            </label>
+          </label>
         </div>
         <div class="category">
             <span class="name_filter">Product Category</span>
@@ -131,35 +131,57 @@
             </div>
             <a class="view_more" @click="visible_style=!visible_style">{{visible_style?"View More":"Hide"}}</a>
         </div>
-        <!-- НЕ ОБРАБОТАННО -->
-        <!--<div class="season">
-            <span class="name_filter">Season</span>
-            <div v-for="i in productSeason" v-bind:key="i.id">
+        <div class="season">
+          <span class="name_filter">Season</span>
+          <div v-show="visible_season">
+            <div v-for="i in productSeason.slice(0,2)" v-bind:key="i.id">
               <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
-                <input type="checkbox">
+                <input type="checkbox" :id="i.id" :value="i" v-model="season">
                 <span class="checkmark"></span>
               </label>
               <br>
             </div>
+          </div>
+          <div v-show="!visible_season">
+            <div v-for="i in productSeason" v-bind:key="i.id">
+              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+                <input type="checkbox" :id="i.id" :value="i" v-model="season">
+                <span class="checkmark"></span>
+              </label>
+              <br>
+            </div>
+          </div>
+            <a class="view_more" @click="visible_season=!visible_season">{{visible_season?"View More":"Hide"}}</a>
         </div>
         <div class="material">
             <span class="name_filter">Material</span>
-            <div v-for="i in productMaterial" v-bind:key="i.id">
+            <div v-show="visible_material">
+            <div v-for="i in productMaterial.slice(0,4)" v-bind:key="i.id">
               <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
-                <input type="checkbox">
+                <input type="checkbox" :id="i.id" :value="i" v-model="material">
                 <span class="checkmark"></span>
               </label>
               <br>
             </div>
-        </div> -->
-      <!-- <button @click="AddTagList">add Tag</button> -->
+          </div>
+          <div v-show="!visible_material">
+            <div v-for="i in productMaterial" v-bind:key="i.id">
+              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+                <input type="checkbox" :id="i.id" :value="i" v-model="material">
+                <span class="checkmark"></span>
+              </label>
+              <br>
+            </div>
+          </div>
+            <a class="view_more" @click="visible_material=!visible_material">{{visible_material?"View More":"Hide"}}</a>
+        </div>
       </div>
     </aside>
     <article>
       <div>
         <div class="tag_section">
           Total {{computedProducts.length}}
-          <div class="tag_list" v-for="a in {category, color, size}" v-bind:key="a.id">
+          <div class="tag_list" v-for="a in {gender, category, color, size, brend, style, season, material}" v-bind:key="a.id">
             <div class="tag_list" v-for="i in a" :key="i.id">
               <button class="tag">{{i}} <span style="color:#E44747">x</span></button>
             </div>
@@ -212,7 +234,7 @@ export default {
   data () {
     return {
       info: null,
-      tagList: [],
+      // tagList: [],
       visible_category: true,
       visible_color: true,
       visible_brend: true,
