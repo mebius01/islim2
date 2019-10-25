@@ -10,7 +10,6 @@
             <input type="range" name="points" min="0" max="10">
             </form>
         </div>
-        <caption>Total {{computedProducts.length}} Products</caption>
         <div class="gender">
             <span class="name_filter">Gender</span>
             <br>
@@ -110,7 +109,7 @@
             </div>
             <a class="view_more" @click="visible_brend=!visible_brend">{{visible_brend?"View More":"Hide"}}</a>
         </div>
-         <div class="style">
+        <div class="style">
             <span class="name_filter">Style</span>
             <div v-show="visible_style">
             <div v-for="i in productStyle.slice(0,4)" v-bind:key="i.id">
@@ -159,8 +158,11 @@
     <article>
       <div>
         <div class="tag_section">
-          <div class="tag_list" v-for="i in {category, color}" v-bind:key="i.id">
-            <button class="tag">{{i}} <span style="color:#E44747">x</span></button>
+          Total {{computedProducts.length}}
+          <div class="tag_list" v-for="a in {category, color, size}" v-bind:key="a.id">
+            <div class="tag_list" v-for="i in a" :key="i.id">
+              <button class="tag">{{i}} <span style="color:#E44747">x</span></button>
+            </div>
           </div>
         <a href="">Clear all</a>
         <select name="Sort By">
