@@ -22,8 +22,8 @@
           </form>
           <div class="love">
             <i class="far fa-user"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-shopping-bag"></i>
+            <i class="far fa-heart"><span v-if="ParentcounterLove !== null">{{ ParentcounterLove + 1 }}</span></i>
+            <i class="fas fa-shopping-bag"><span>9</span></i>
           </div>
         </div>
         <hr>
@@ -36,7 +36,9 @@
           </ul>
         </div>
     </div>
-    <Catalog />
+    <!-- Component Catalog -->
+    <Catalog @love = "OncounterLove"/>
+    <!-- Component Catalog -->
     <footer>
       <div class="footer">
         <div class="logo_foo">
@@ -98,8 +100,20 @@ import Catalog from './components/Catalog.vue'
 
 export default {
   name: 'app',
-  components: {
-    Catalog
+  components: {Catalog},
+  data() {
+    return {
+      ParentcounterLove: null,
+      ParentId_product: null
+    }
+  },
+  methods: {
+    OncounterLove (data) {
+      this.ParentcounterLove = data.counterLove.count,
+      this.ParentId_product = data.counterLove.id_product
+
+      // console.log("DATRA", data)
+    }
   }
 }
 </script>
@@ -187,12 +201,36 @@ hr{
   height: 38px;
 }
 .control .love i{
+  position: relative;
   margin-left: 21px;
   margin-top: 15px;
   font-size: 21px;
   text-align: left;
   color: #B1B8BB;
 }
+/* for 0>=9  */
+/* padding: 0px 4px 0px 4px; */
+/* for 10>=99
+padding: 2px 2px 2px 2px; */
+/* for 100>=999
+padding: 4px 1px 4px 1px; */
+
+.control .love span{
+  color: #FFFFFF;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  position: absolute;
+  bottom: 14px;
+  left: 15px;
+  padding: 0px 4px 0px 4px;
+	background: red;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+
 .control input{
   border: 1px solid #B1B8BB;
   width: 570px;

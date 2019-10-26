@@ -1,7 +1,7 @@
 <template>
   <div class="catalog">
     <aside>
-      <div class="filters">
+      <!-- <div class="filters">
         <div class="price">
           <span class="name_filter">Price</span>
           <form action="" name="price">
@@ -175,7 +175,7 @@
           </div>
             <a class="view_more" @click="visible_material=!visible_material">{{visible_material?"View More":"Hide"}}</a>
         </div>
-      </div>
+      </div> -->
     </aside>
     <article>
       <div>
@@ -196,7 +196,8 @@
         <div v-for="(item, index) in computedProducts" v-bind:key="index">
           <div class="card">
             <div class="sale">SALE</div>
-            <a class="heart" href=""><i class="far fa-heart"></i></a>
+            <a class="heart" @click="OnLove" :id='item.id'><i class="far fa-heart"></i>
+            {{ counterLove.count }}</a>
             <img src="../assets/250.png" :alt="item.name" :title="item.name" width="250" height="250">
             <div class="name">
                 {{item.id}}-{{item.name}}
@@ -249,18 +250,25 @@ export default {
       size: [],
       style: [],
       season: [],
-      material: []
+      material: [],
+      counterLove: {
+        count: 0,
+        id_product: []
+      }
     }
   },
-  // methods: {
-  //   AddTagList () {
-  //     console.log('AddTagList', this.tagList)
-  //   }
-  // },
   mounted () {
     axios
       .get('http://localhost:3000/products')
       .then(response => (this.info = response.data))
+  },
+  methods: {
+    OnLove () {
+      this.$emit('love', {counterLove: {
+        count: this.counterLove.count++,
+        id_product: this.counterLove.id_product
+        }})
+    }
   },
   computed: {
     productCategories () {
@@ -498,7 +506,6 @@ input[type=range]{
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   color:  var(--global_text_color);
   text-align:left;
-  position: relative;
 }
 .card img{
   border-top-left-radius: 4px;
@@ -523,7 +530,7 @@ input[type=range]{
   padding-right: 9px;
   padding-left: 2px;
 }
-.foot_card, .price, .name{
+.card .foot_card, .card .price, .card .name{
   /* margin-top: 7px;
   margin-bottom: 7px; */
   margin-left: 12px;
