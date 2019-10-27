@@ -1,12 +1,12 @@
 <template>
   <div class="catalog">
     <aside>
-      <!-- <div class="filters">
+      <div class="filters">
         <div class="price">
           <span class="name_filter">Price</span>
           <form action="" name="price">
-            <input class="min" type="text" placeholder="min">
-            <input class="max" type="text" placeholder="max">
+            <input class="min" type="number" placeholder="min">
+            <input class="max" type="number" placeholder="max">
             <input type="range" name="points" min="0" max="10">
           </form>
         </div>
@@ -175,32 +175,44 @@
           </div>
             <a class="view_more" @click="visible_material=!visible_material">{{visible_material?"View More":"Hide"}}</a>
         </div>
-      </div> -->
+      </div>
     </aside>
     <article>
       <div>
         <div class="tag_section">
-          Total {{computedProducts.length}}
           <div class="tag_list" v-for="a in {gender, category, color, size, brend, style, season, material}" v-bind:key="a.id">
             <div class="tag_list" v-for="i in a" :key="i.id">
-              <button class="tag">{{i}} <span style="color:#E44747">x</span></button>
+              <button class="tag">{{i}}<span style="color:#E44747">x</span></button>
             </div>
           </div>
         <a href="">Clear all</a>
-        <select name="Sort By">
+        <select name="Sort By" v-model="sortBy">
+          <option value="name">Name</option>
+          <option value="category">Category</option>
+          <option value="brend">Brend</option>
+          <option value="material">Material</option>
+          <option value="color">Color</option>
+          <option value="size">Size</option>
+        </select>
+        <!-- <select name="Sort By">
           <option value="Categories">Sort By +</option>
           <option value="Categories">Sort By -</option>
-        </select>
+        </select> -->
       </div>
       <div class="islim">
         <div v-for="(item, index) in computedProducts" v-bind:key="index">
           <div class="card">
-            <div class="sale">SALE</div>
-            <a class="heart" @click="OnLove" :id='item.id'><i class="far fa-heart"></i>
-            {{ counterLove.count }}</a>
+            <div class="sale" v-if="item.sale === true">SALE</div>
+
+            <a class="heart" 
+            @click="OnLove(item.like);
+            item.like = !item.like">
+            <i :class="{ like: item.like }" class="far fa-heart"></i>
+            </a>
+
             <img src="../assets/250.png" :alt="item.name" :title="item.name" width="250" height="250">
             <div class="name">
-                {{item.id}}-{{item.name}}
+                {{item.name}}
               </div>
             <div class="foot_card">
               <div class="descript">
@@ -251,10 +263,8 @@ export default {
       style: [],
       season: [],
       material: [],
-      counterLove: {
-        count: 0,
-        id_product: []
-      }
+      sortBy: 'name',
+      count: 0
     }
   },
   mounted () {
@@ -263,11 +273,14 @@ export default {
       .then(response => (this.info = response.data))
   },
   methods: {
-    OnLove () {
-      this.$emit('love', {counterLove: {
-        count: this.counterLove.count++,
-        id_product: this.counterLove.id_product
-        }})
+    OnLove (l) {
+      if (l === true) {
+        this.count--
+      }
+      else {
+        this.count++
+      }
+      this.$emit('love', {count: this.count})
     }
   },
   computed: {
@@ -302,7 +315,7 @@ export default {
         (this.style.length === 0 || this.style.includes(item.style)) &&
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
-      })
+        }).sort((a, b) => {return a[this.sortBy].toString().localeCompare(b[this.sortBy].toString())})
     }
   }
 }
@@ -310,6 +323,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.like {
+  color: red;
+}
 .catalog{
   display: grid;
   grid-template-columns: auto auto;
@@ -512,11 +528,13 @@ input[type=range]{
   border-top-right-radius: 4px;
 }
 .heart{
+  cursor: pointer;
   position: absolute;
   top: 13px;
   right: 13px;
   color: #A3A3A3;
 }
+
 .sale{
   position: absolute;
   top:12px;

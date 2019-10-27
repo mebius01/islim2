@@ -22,7 +22,7 @@
           </form>
           <div class="love">
             <i class="far fa-user"></i>
-            <i class="far fa-heart"><span v-if="ParentcounterLove !== null">{{ ParentcounterLove + 1 }}</span></i>
+            <i class="far fa-heart"><span v-if="ParentcounterLove !== 0">{{ ParentcounterLove}}</span></i>
             <i class="fas fa-shopping-bag"><span>9</span></i>
           </div>
         </div>
@@ -109,8 +109,7 @@ export default {
   },
   methods: {
     OncounterLove (data) {
-      this.ParentcounterLove = data.counterLove.count,
-      this.ParentId_product = data.counterLove.id_product
+      this.ParentcounterLove = data.count
 
       // console.log("DATRA", data)
     }
