@@ -96,11 +96,11 @@
 </template>
 
 <script>
-import Catalog from './components/Catalog.vue'
+// import Catalog from './components/Catalog.vue'
 
 export default {
   name: 'app',
-  components: {Catalog},
+  // components: {Catalog},
   data() {
     return {
       ParentcounterLove: null,
@@ -110,8 +110,6 @@ export default {
   methods: {
     OncounterLove (data) {
       this.ParentcounterLove = data.count
-
-      // console.log("DATRA", data)
     }
   }
 }

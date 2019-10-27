@@ -46,8 +46,8 @@
         <div class="color">
             <span class="name_filter">Colour</span>
             <div v-show="visible_color">
-              <div v-for="i in productColor.slice(0,4)" v-bind:key="i.id">
-                <label class="date_filter">{{i}}
+              <div class="color_css" v-for="i in productColor.slice(0,4)" v-bind:key="i.id">
+                <label class="date_filter">
                   <input type="checkbox" :id="i.id" :value="i" v-model="color">
                   <span class="checkmark" v-bind:style="{background: i}"></span>
                 </label>
@@ -55,8 +55,8 @@
               </div>
             </div>
             <div v-show="!visible_color">
-              <div v-for="i in productColor" v-bind:key="i.id">
-                <label class="date_filter">{{i}}
+              <div class="color_css" v-for="i in productColor" v-bind:key="i.id">
+                <label class="date_filter">
                   <input type="checkbox" :id="i.id" :value="i" v-model="color">
                   <span class="checkmark" v-bind:style="{background: i}"></span>
                 </label>
@@ -241,13 +241,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import db from '../assets/db.json'
 export default {
   name: 'Catalog',
   data () {
     return {
-      info: null,
-      // tagList: [],
+      db: db.products,
       visible_category: true,
       visible_color: true,
       visible_brend: true,
@@ -267,11 +266,6 @@ export default {
       count: 0
     }
   },
-  mounted () {
-    axios
-      .get('http://localhost:3000/products')
-      .then(response => (this.info = response.data))
-  },
   methods: {
     OnLove (l) {
       if (l === true) {
@@ -285,28 +279,28 @@ export default {
   },
   computed: {
     productCategories () {
-      return [...new Set(this.info.map(({ category }) => category))]
+      return [...new Set(this.db.map(({ category }) => category))]
     },
     productColor () {
-      return [...new Set(this.info.map(({ color }) => color))]
+      return [...new Set(this.db.map(({ color }) => color))]
     },
     productSize () {
-      return [...new Set(this.info.map(({ size }) => size))]
+      return [...new Set(this.db.map(({ size }) => size))]
     },
     productBrend () {
-      return [...new Set(this.info.map(({ brend }) => brend))]
+      return [...new Set(this.db.map(({ brend }) => brend))]
     },
     productStyle () {
-      return [...new Set(this.info.map(({ style }) => style))]
+      return [...new Set(this.db.map(({ style }) => style))]
     },
     productSeason () {
-      return [...new Set(this.info.map(({ season }) => season))]
+      return [...new Set(this.db.map(({ season }) => season))]
     },
     productMaterial () {
-      return [...new Set(this.info.map(({ material }) => material))]
+      return [...new Set(this.db.map(({ material }) => material))]
     },
     computedProducts () {
-      return this.info.filter((item) => {
+      return this.db.filter((item) => {
         return (this.color.length === 0 || this.color.includes(item.color)) &&
         (this.category.length === 0 || this.category.includes(item.category)) &&
         (this.gender.length === 0 || this.gender.includes(item.gender)) &&
@@ -319,10 +313,16 @@ export default {
     }
   }
 }
+// https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.color_css{
+  display: inline-block;
+  margin-bottom: 10px
+}
+
 .like {
   color: red;
 }
@@ -451,8 +451,7 @@ export default {
 .price .count, .gender .count,
 .category .count, .size .count,
 .brend .count, .style .count,
-.season .count, .material .count,
-.color .count{
+.season .count, .material .count {
   font-style: normal;
   font-weight: 300;
   font-size: 14px;
