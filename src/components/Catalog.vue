@@ -13,12 +13,12 @@
         <div class="gender">
           <span class="name_filter">Gender</span>
           <br>
-          <label class="date_filter">Man
+          <label class="date_filter">Man ({{db.map(a => a.gender).filter(item => item === "man").length}})
             <input type="checkbox"  v-model="gender" value="man">
             <span class="checkmark"></span>
           </label>
           <br>
-          <label class="date_filter">Woman <span class="count">(118)</span>
+          <label class="date_filter">Woman ({{db.map(a => a.gender).filter(item => item === "woman").length}})
             <input type="checkbox"  v-model="gender" value="woman">
             <span class="checkmark"></span>
           </label>
