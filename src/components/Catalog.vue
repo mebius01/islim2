@@ -253,6 +253,7 @@
 import db from '../assets/db.json'
 export default {
   name: 'Catalog',
+  props: ['search'],
   data () {
     return {
       db: db.products,
@@ -288,7 +289,7 @@ export default {
    },
   computed: {
     productCategories () {
-      return [...new Set(this.db.map(({ category }) => category))]
+      return [...new Set(this.db.map(({ category }) => category))];
     },
     productColor () {
       return [...new Set(this.db.map(({ color }) => color))]
@@ -310,7 +311,8 @@ export default {
     },
     computedProducts () {
       return this.db.filter((item) => {
-        return (this.color.length === 0 || this.color.includes(item.color)) &&
+        return (this.search.length === 0 || item.name.includes(this.search.toUpperCase())) &&
+        (this.color.length === 0 || this.color.includes(item.color)) &&
         (this.category.length === 0 || this.category.includes(item.category)) &&
         (this.gender.length === 0 || this.gender.includes(item.gender)) &&
         (this.brend.length === 0 || this.brend.includes(item.brend)) &&
@@ -319,7 +321,13 @@ export default {
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
         })
+    },
+    SearchProduct () {
+      return this.db.filter(name => {
+        return name.indexOf(this.search) !== -1
+      })
     }
+    
   }
 }
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
@@ -331,9 +339,16 @@ export default {
   display: inline-block;
   margin-bottom: 10px
 }
-
-a{
+ 
+.tag_section a{
   cursor: pointer;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 22px;
+  text-decoration-line: underline;
+  text-transform: capitalize;
+  color: #000000;
 }
 
 .like {
@@ -502,14 +517,7 @@ input[type=range]{
   line-height: 22px;
   color: #000000;
 }
-.tag_section a{
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 22px;
-  text-decoration: none;
-  text-transform: capitalize;
-  color: #000000;
-}
+
 .tag_section select{
   float:right;
   width: 150px;
