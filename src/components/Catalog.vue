@@ -31,6 +31,7 @@
                   <input type="checkbox" :id="i.id" :value="i" v-model="category">
                   <span class="checkmark"></span>
                 </label>
+                <br>
               </div>
             </div>
             <div v-show="!visible_category">
@@ -39,6 +40,7 @@
                   <input type="checkbox" :id="i.id" :value="i" v-model="category">
                   <span class="checkmark"></span>
                 </label>
+                <br>
                 </div>
               </div>
               <a class="view_more" @click="visible_category=!visible_category">{{visible_category?"View More":"Hide"}}</a>
@@ -181,23 +183,30 @@
       <div>
         <div class="tag_section">
           <div class="tag_list" v-for="a in {gender, category, color, size, brend, style, season, material}" v-bind:key="a.id">
-            <div class="tag_list" v-for="i in a" :key="i.id">
-              <button class="tag">{{i}}<span style="color:#E44747">x</span></button>
+            <div class="tag_list" v-for="(i, index) in a" :key="index">
+              <button class="tag" v-on:click="a.splice(index, 1)">{{i}}<span style="color:#E44747"> x </span></button>
             </div>
           </div>
-        <a href="">Clear all</a>
-        <select name="Sort By" v-model="sortBy">
+          <a @click="gender.splice(0);
+          category.splice(0);
+          color.splice(0);
+          size.splice(0);
+          brend.splice(0);
+          style.splice(0);
+          season.splice(0);
+          material.splice(0)">Clear all</a>
+        <!-- <select name="Sort By" v-model="sortBy">
           <option value="name">Name</option>
           <option value="category">Category</option>
           <option value="brend">Brend</option>
           <option value="material">Material</option>
           <option value="color">Color</option>
           <option value="size">Size</option>
-        </select>
-        <!-- <select name="Sort By">
+        </select> -->
+        <select name="Sort By" v-model="sortBy">
           <option value="Categories">Sort By +</option>
           <option value="Categories">Sort By -</option>
-        </select> -->
+        </select>
       </div>
       <div class="islim">
         <div v-for="(item, index) in computedProducts" v-bind:key="index">
@@ -276,7 +285,7 @@ export default {
       }
       this.$emit('love', {count: this.count})
     }
-  },
+   },
   computed: {
     productCategories () {
       return [...new Set(this.db.map(({ category }) => category))]
@@ -309,7 +318,7 @@ export default {
         (this.style.length === 0 || this.style.includes(item.style)) &&
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
-        }).sort((a, b) => {return a[this.sortBy].toString().localeCompare(b[this.sortBy].toString())})
+        })
     }
   }
 }
@@ -321,6 +330,10 @@ export default {
 .color_css{
   display: inline-block;
   margin-bottom: 10px
+}
+
+a{
+  cursor: pointer;
 }
 
 .like {
