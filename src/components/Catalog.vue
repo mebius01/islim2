@@ -27,7 +27,7 @@
             <span class="name_filter">Product Category</span>
             <div v-show="visible_category">
               <div v-for="i in productCategories.slice(0,4)" v-bind:key="i.id">
-                <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+                <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.category).filter(item => item === i).length}})</span>
                   <input type="checkbox" :id="i.id" :value="i" v-model="category">
                   <span class="checkmark"></span>
                 </label>
@@ -36,7 +36,7 @@
             </div>
             <div v-show="!visible_category">
               <div v-for="i in productCategories" v-bind:key="i.id">
-                <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+                <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.category).filter(item => item === i).length}})</span>
                   <input type="checkbox" :id="i.id" :value="i" v-model="category">
                   <span class="checkmark"></span>
                 </label>
@@ -71,7 +71,7 @@
           <span class="name_filter">Size</span>
           <div v-show="visible_size">
               <div v-for="i in productSize.slice(0,4)" v-bind:key="i.id">
-                <label class="date_filter">{{i}}
+                <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.size).filter(item => item === i).length}})</span>
                   <input type="checkbox" :id="i.id" :value="i" v-model="size">
                   <span class="checkmark"></span>
                 </label>
@@ -80,7 +80,7 @@
             </div>
             <div v-show="!visible_size">
               <div v-for="i in productSize" v-bind:key="i.id">
-                <label class="date_filter">{{i}}
+                <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.size).filter(item => item === i).length}})</span>
                   <input type="checkbox" :id="i.id" :value="i" v-model="size">
                   <span class="checkmark"></span>
                 </label>
@@ -93,7 +93,7 @@
           <span class="name_filter">Brend</span>
           <div v-show="visible_brend">
             <div v-for="i in productBrend.slice(0,4)" v-bind:key="i.id">
-              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+              <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.brend).filter(item => item === i).length}})</span>
                 <input type="checkbox" :id="i.id" :value="i" v-model="brend">
                 <span class="checkmark"></span>
               </label>
@@ -102,7 +102,7 @@
             </div>
             <div v-show="!visible_brend">
               <div v-for="i in productBrend" v-bind:key="i.id">
-                <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+                <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.brend).filter(item => item === i).length}})</span>
                   <input type="checkbox" :id="i.id" :value="i" v-model="brend">
                   <span class="checkmark"></span>
                 </label>
@@ -115,7 +115,7 @@
             <span class="name_filter">Style</span>
             <div v-show="visible_style">
             <div v-for="i in productStyle.slice(0,4)" v-bind:key="i.id">
-              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+              <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.style).filter(item => item === i).length}})</span>
                 <input type="checkbox" :id="i.id" :value="i" v-model="style">
                 <span class="checkmark"></span>
               </label>
@@ -124,7 +124,7 @@
             </div>
             <div v-show="!visible_style">
               <div v-for="i in productStyle" v-bind:key="i.id">
-                <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+                <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.style).filter(item => item === i).length}})</span>
                   <input type="checkbox" :id="i.id" :value="i" v-model="style">
                   <span class="checkmark"></span>
                 </label>
@@ -137,7 +137,7 @@
           <span class="name_filter">Season</span>
           <div v-show="visible_season">
             <div v-for="i in productSeason.slice(0,2)" v-bind:key="i.id">
-              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+              <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.season).filter(item => item === i).length}})</span>
                 <input type="checkbox" :id="i.id" :value="i" v-model="season">
                 <span class="checkmark"></span>
               </label>
@@ -146,7 +146,7 @@
           </div>
           <div v-show="!visible_season">
             <div v-for="i in productSeason" v-bind:key="i.id">
-              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+              <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.season).filter(item => item === i).length}})</span>
                 <input type="checkbox" :id="i.id" :value="i" v-model="season">
                 <span class="checkmark"></span>
               </label>
@@ -159,7 +159,7 @@
             <span class="name_filter">Material</span>
             <div v-show="visible_material">
             <div v-for="i in productMaterial.slice(0,4)" v-bind:key="i.id">
-              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+              <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.material).filter(item => item === i).length}})</span>
                 <input type="checkbox" :id="i.id" :value="i" v-model="material">
                 <span class="checkmark"></span>
               </label>
@@ -168,7 +168,7 @@
           </div>
           <div v-show="!visible_material">
             <div v-for="i in productMaterial" v-bind:key="i.id">
-              <label class="date_filter">{{i}} <span class="count">(COUNTER)</span>
+              <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.material).filter(item => item === i).length}})</span>
                 <input type="checkbox" :id="i.id" :value="i" v-model="material">
                 <span class="checkmark"></span>
               </label>
@@ -321,13 +321,7 @@ export default {
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
         })
-    },
-    SearchProduct () {
-      return this.db.filter(name => {
-        return name.indexOf(this.search) !== -1
-      })
-    }
-    
+    }    
   }
 }
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
