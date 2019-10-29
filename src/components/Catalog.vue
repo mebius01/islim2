@@ -180,33 +180,28 @@
       </div>
     </aside>
     <article>
-      <div>
-        <div class="tag_section">
-          <div class="tag_list" v-for="a in {gender, category, color, size, brend, style, season, material}" v-bind:key="a.id">
-            <div class="tag_list" v-for="(i, index) in a" :key="index">
-              <button class="tag" v-on:click="a.splice(index, 1)">{{i}}<span style="color:#E44747"> x </span></button>
-            </div>
+      <div class="tag_section">
+        <div class="tag_list" v-for="a in {gender, category, color, size, brend, style, season, material}" v-bind:key="a.id">
+          <div class="tag_list" v-for="(i, index) in a" :key="index">
+            <button class="tag" v-on:click="a.splice(index, 1)">{{i}}<span style="color:#E44747"> x </span></button>
           </div>
-          <a @click="gender.splice(0);
-          category.splice(0);
-          color.splice(0);
-          size.splice(0);
-          brend.splice(0);
-          style.splice(0);
-          season.splice(0);
-          material.splice(0)">Clear all</a>
-        <!-- <select name="Sort By" v-model="sortBy">
-          <option value="name">Name</option>
-          <option value="category">Category</option>
-          <option value="brend">Brend</option>
-          <option value="material">Material</option>
-          <option value="color">Color</option>
-          <option value="size">Size</option>
-        </select> -->
-        <select name="Sort By" v-model="sortBy">
-          <option value="Categories">Sort By +</option>
-          <option value="Categories">Sort By -</option>
+        </div>
+        <a @click="gender.splice(0);
+        category.splice(0);
+        color.splice(0);
+        size.splice(0);
+        brend.splice(0);
+        style.splice(0);
+        season.splice(0);
+        material.splice(0)">Clear all</a>
+        <select name="Sort By">
+          <option value="Price" @click="sortPrice_De()">Price +</option>
+          <option value="Price" @click="sortPrice_Ae()">Price -</option>
         </select>
+        <br>
+        <a  @click="sortPrice_De()">Price +></a>
+        <br>
+        <a  @click="sortPrice_Ae()">Price -></a>
       </div>
       <div class="islim">
         <div v-for="(item, index) in computedProducts" v-bind:key="index">
@@ -233,7 +228,6 @@
               </div>
           </div>
         </div>
-      </div>
       </div>
     </article>
     <div class="paginator">
@@ -272,7 +266,6 @@ export default {
       style: [],
       season: [],
       material: [],
-      sortBy: 'name',
       count: 0
     }
   },
@@ -285,8 +278,20 @@ export default {
         this.count++
       }
       this.$emit('love', {count: this.count})
+    },
+    sortPrice_De() {
+      this.computedProducts.sort(function(a, b) {
+        return a.price - b.price
+      })
+      console.log("SORT DE", this.computedProducts)
+    },
+    sortPrice_Ae() {
+      this.computedProducts.sort(function(a, b) {
+        return b.price - a.price
+      })
+      console.log("SORT AE", this.computedProducts)
     }
-   },
+  },
   computed: {
     productCategories () {
       return [...new Set(this.db.map(({ category }) => category))];
@@ -321,14 +326,19 @@ export default {
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
         })
-    }    
+    }
   }
 }
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+// https://laracasts.com/discuss/channels/vue/how-to-implement-a-range-filter-like-between-in-sql
+// https://www.fareez.info/blog/pagination-component-using-vuejs/
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+a {
+  cursor: pointer;
+}
 .color_css{
   display: inline-block;
   margin-bottom: 10px
