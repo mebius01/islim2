@@ -17,7 +17,7 @@
             <select name="Categories">
               <option value="Categories">Categories</option>
             </select>
-            <input type="text" name="search" v-model="searchName">
+            <input type="text" v-model="search">
             <button><i class="fas fa-search"></i> Search</button>
           </form>
           <div class="love">
@@ -37,7 +37,7 @@
         </div>
     </div>
     <!-- Component Catalog -->
-    <Catalog @love = "OncounterLove"/>
+    <Catalog v-bind:search="search"  @love = "OncounterLove"/>
     <!-- Component Catalog -->
     <footer>
       <div class="footer">
@@ -104,7 +104,8 @@ export default {
   data() {
     return {
       ParentcounterLove: null,
-      ParentId_product: null
+      ParentId_product: null,
+      search: '',
     }
   },
   methods: {
