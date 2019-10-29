@@ -46,7 +46,7 @@
         <div class="color">
             <span class="name_filter">Colour</span>
             <div v-show="visible_color">
-              <div class="color_css" v-for="i in productColor.slice(0,4)" v-bind:key="i.id">
+              <div class="color_css" v-for="i in productColor.slice(0,6)" v-bind:key="i.id">
                 <label class="date_filter">
                   <input type="checkbox" :id="i.id" :value="i" v-model="color">
                   <span class="checkmark" v-bind:style="{background: i}"></span>
@@ -204,7 +204,7 @@
           <div class="card">
             <div class="sale" v-if="item.sale === true">SALE</div>
 
-            <a class="heart" 
+            <a class="heart"
             @click="OnLove(item.like);
             item.like = !item.like">
             <i :class="{ like: item.like }" class="far fa-heart"></i>
