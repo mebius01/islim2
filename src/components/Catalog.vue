@@ -9,6 +9,8 @@
             <input class="max" type="number" placeholder="max">
             <input type="range" name="points" min="0" max="10">
           </form>
+        {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
+        {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
         </div>
         <div class="gender">
           <span class="name_filter">Gender</span>
