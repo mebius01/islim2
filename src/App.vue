@@ -39,6 +39,7 @@
     <!-- Component Catalog -->
     <Catalog v-bind:search="search"  @love = "OncounterLove"/>
     <!-- Component Catalog -->
+    <Pagination />
     <footer>
       <div class="footer">
         <div class="logo_foo">
@@ -145,7 +146,7 @@ hr{
     "bread_crumb"
     "catalog"
     /* "aside article" */
-    /* "paginator paginator" */
+    "paginator"
     "footer"
 
 }

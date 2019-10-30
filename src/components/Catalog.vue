@@ -237,16 +237,6 @@
         </div>
       </div>
     </article>
-    <div class="paginator">
-      <a href="#">&laquo;</a>
-      <a href="#">1</a>
-      <a class="active" href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a href="#">6</a>
-      <a href="#">&raquo;</a>
-    </div>
   </div>
 </template>
 
@@ -393,11 +383,10 @@ a {
 .catalog{
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto;
   grid-area: catalog;
   grid-template-areas:
     "aside article"
-    "paginator paginator"
 }
 .view_more{
   cursor: pointer;
