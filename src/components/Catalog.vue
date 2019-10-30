@@ -195,13 +195,20 @@
         season.splice(0);
         material.splice(0)">Clear all</a>
         <select name="Sort By">
-          <option value="Price" @click="sortPrice_De()">Price +</option>
-          <option value="Price" @click="sortPrice_Ae()">Price -</option>
+          <option>Price +</option>
+          <option>Price -</option>
         </select>
-        <br>
-        <a  @click="sortPrice_De()">Price +></a>
-        <br>
-        <a  @click="sortPrice_Ae()">Price -></a>
+        <!-- <a class="sortby" @click="sortBy_activ = !sortBy_activ">Sort by</a> -->
+        <!-- <div class="sortby" v-show="sortBy_activ"> -->
+          <!-- <br> -->
+          | <a  @click="sortPrice_asc()">Price от большего</a>
+          <!-- <br> -->
+          | <a  @click="sortPrice_desc()">Price от меньшего</a>
+          <!-- <br> -->
+          | <a @click="sortName_asc()">сортировка от A</a>
+          <!-- <br> -->
+          | <a @click="sortName_desc()">сортировка от Z</a>
+        <!-- </div> -->
       </div>
       <div class="islim">
         <div v-for="(item, index) in computedProducts" v-bind:key="index">
@@ -266,6 +273,8 @@ export default {
       style: [],
       season: [],
       material: [],
+      sortBy: [],
+      sortBy_activ: false,
       count: 0
     }
   },
@@ -279,17 +288,37 @@ export default {
       }
       this.$emit('love', {count: this.count})
     },
-    sortPrice_De() {
-      this.computedProducts.sort(function(a, b) {
+    sortPrice_desc() { // сортировка по убыванию
+      this.db.sort(function(a, b) {
         return a.price - b.price
       })
       console.log("SORT DE", this.computedProducts)
     },
-    sortPrice_Ae() {
-      this.computedProducts.sort(function(a, b) {
+    sortPrice_asc() { // сортировка по возрастанию
+      this.db.sort(function(a, b) {
         return b.price - a.price
       })
       console.log("SORT AE", this.computedProducts)
+    },
+    sortName_asc () { // сортировка имени по возрастанию
+      this.db.sort(function(a, b) {
+        if (a.name > b.name) {
+          return 1
+        }
+        if (a.name < b.name) {
+          return -1
+        }
+      })
+    },
+    sortName_desc () { // сортировка имени по убыванию
+      this.db.sort(function(a, b) {
+        if (b.name > a.name) {
+          return 1
+        }
+        if (b.name < a.name) {
+          return -1
+        }
+      })
     }
   },
   computed: {
@@ -329,6 +358,9 @@ export default {
     }
   }
 }
+// .sort(function(a, b) {return b.price - a.price})
+// .sort(function(a, b) {return a.price - b.price})
+
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 // https://laracasts.com/discuss/channels/vue/how-to-implement-a-range-filter-like-between-in-sql
 // https://www.fareez.info/blog/pagination-component-using-vuejs/
@@ -522,6 +554,9 @@ input[type=range]{
   color: #000000;
 }
 
+.tag_section .sortby{
+  float:right;
+}
 .tag_section select{
   float:right;
   width: 150px;
