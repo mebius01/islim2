@@ -1,16 +1,21 @@
 <template>
     <div class="paginator">
-      <a href="#">&laquo;</a>
-      <a href="#">1</a>
-      <a class="active" href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a href="#">6</a>
-      <a href="#">&raquo;</a>
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a class="active" href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
     </div>
 </template>
-<style>
+<script>
+export default {
+    
+}
+</script>
+<style scoped>
 .paginator {
     justify-self: center;
     /* background-color: bisque; */
