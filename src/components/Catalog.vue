@@ -7,8 +7,14 @@
           <form action="" name="price">
             <input class="min" type="number" placeholder="min">
             <input class="max" type="number" placeholder="max">
-            <input type="range" name="points" min="0" max="10">
           </form>
+          <range-slider
+            class="slider"
+            min="10"
+            max="1000"
+            step="10"
+            v-model="sliderValue">
+          </range-slider>
         {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
         {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
         </div>
@@ -200,7 +206,6 @@
           <option>Price +</option>
           <option>Price -</option>
         </select>
-        <v-select :options="['Canada', 'United States']"></v-select>
         <!-- <a class="sortby" @click="sortBy_activ = !sortBy_activ">Sort by</a> -->
         <!-- <div class="sortby" v-show="sortBy_activ"> -->
           <!-- <br> -->
