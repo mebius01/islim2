@@ -213,7 +213,7 @@
         <!-- </div> -->
       </div>
       <div class="islim">
-        <div v-for="(item, index) in computedProducts" v-bind:key="index">
+        <div v-for="(item, index) in pageOfItems" v-bind:key="index">
           <div class="card">
             <div class="sale" v-if="item.sale === true">SALE</div>
 
@@ -239,16 +239,20 @@
         </div>
       </div>
     </article>
-    <paginate
-      :page-count="20"
-      :page-range="3"
-      :margin-pages="2"
-      :click-handler="clickCallback"
-      :prev-text="'Prev'"
-      :next-text="'Next'"
-      :container-class="'pagination'"
-      :page-class="'page-item'">
-    </paginate>
+    <div class="paginator">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a class="active" href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
+    </div>
+    <div>
+      <jw-pagination :items="computedProducts" @changePage="onChangePage"></jw-pagination>
+    </div>
+    <!-- https://jasonwatmore.com/post/2019/08/21/vue-js-simple-pagination-example -->
   </div>
 </template>
 
@@ -259,6 +263,8 @@ export default {
   props: ['search'],
   data () {
     return {
+      // exampleItems,
+      pageOfItems: [],
       db: db.products,
       visible_category: true,
       visible_color: true,
@@ -322,8 +328,9 @@ export default {
         }
       })
     },
-    clickCallback: function(pageNum) {
-      console.log(pageNum)
+    onChangePage(pageOfItems) {
+      // update page of items
+      this.pageOfItems = pageOfItems;
     }
   },
   computed: {
@@ -641,5 +648,29 @@ input[type=range]{
   /* identical to box height */
   color: #000000;
   margin-bottom: 4px;
+}
+.paginator {
+    justify-self: center;
+    /* background-color: bisque; */
+    grid-area: paginator;
+    display: inline-block;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.paginator a {
+    border: 1px solid #EAF1F4;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin-left: 10px;
+    border-radius: 5px;
+    color: #B0BEC5;
+}
+.paginator a.active{
+    background: #4A5E69;
+}
+.paginator a:hover{
+    background: #4A5E69;
 }
 </style>
