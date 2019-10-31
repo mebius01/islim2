@@ -200,6 +200,7 @@
           <option>Price +</option>
           <option>Price -</option>
         </select>
+        <v-select :options="['Canada', 'United States']"></v-select>
         <!-- <a class="sortby" @click="sortBy_activ = !sortBy_activ">Sort by</a> -->
         <!-- <div class="sortby" v-show="sortBy_activ"> -->
           <!-- <br> -->
@@ -239,31 +240,31 @@
         </div>
       </div>
     </article>
-    <div class="paginator">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a class="active" href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
-    </div>
-    <div>
-      <jw-pagination :items="computedProducts" @changePage="onChangePage"></jw-pagination>
-    </div>
-    <!-- https://jasonwatmore.com/post/2019/08/21/vue-js-simple-pagination-example -->
+    <jw-pagination
+      :items="computedProducts"
+      @changePage="onChangePage"
+      :disableDefaultStyles="true"
+      :labels="customLabels"
+      :pageSize="3"
+      :maxPages="10">
+    </jw-pagination>
   </div>
 </template>
 
 <script>
 import db from '../assets/db.json'
+
+const customLabels = {
+  previous: '<',
+  next: '>'
+}
+
 export default {
   name: 'Catalog',
   props: ['search'],
   data () {
     return {
-      // exampleItems,
+      customLabels,
       pageOfItems: [],
       db: db.products,
       visible_category: true,
@@ -380,6 +381,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.pagination {
+  justify-self: center;
+  grid-area: paginator;
+}
+
+.page-item .page-number .active{
+    background: #4A5E69;
+}
+.pagination a:hover{
+    background: #4A5E69;
+}
+
 a {
   cursor: pointer;
 }
@@ -405,10 +419,11 @@ a {
 .catalog{
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: auto;
+  grid-template-rows: auto auto;
   grid-area: catalog;
   grid-template-areas:
     "aside article"
+    "paginator paginator"
 }
 .view_more{
   cursor: pointer;

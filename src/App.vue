@@ -39,7 +39,6 @@
     <!-- Component Catalog -->
     <Catalog v-bind:search="search"  @love = "OncounterLove"/>
     <!-- Component Catalog -->
-    <Pagination />
     <footer>
       <div class="footer">
         <div class="logo_foo">
@@ -124,6 +123,7 @@ html, body {
     height: 100%;
     font-family: Montserrat;
 }
+
 :root{
   --global-width:1130px;
 }
@@ -330,5 +330,35 @@ footer {
 .pay{
   grid-area: pay;
   justify-self: end;
+}
+/* ПАГИНАЦИЯ */
+.pagination {
+  justify-self: center;
+  grid-area: paginator;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.pagination li {
+  display: inline-block;
+}
+.pagination li a {
+  border: 1px solid #EAF1F4;
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin-left: 10px;
+  border-radius: 5px;
+  color: #B0BEC5;
+  cursor: pointer;
+}
+.pagination .active a{
+  background: #4A5E69;
+}
+.pagination li a:hover{
+  background: #4A5E69;
+}
+.pagination li.first, .pagination li.last {
+  display: none;
 }
 </style>

@@ -2,14 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import Catalog from './components/Catalog.vue'
-// import Pagination from './components/Pagination.vue'
-// import Paginate from 'vuejs-paginate'
 import JwPagination from 'jw-vue-pagination'
+import vSelect from 'vue-select'
 
 Vue.component('jw-pagination', JwPagination)
-// Vue.component('paginate', Paginate)
 Vue.component('Catalog', Catalog)
-// Vue.component('Pagination', Pagination)
+Vue.component('v-select', vSelect)
 
 Vue.config.productionTip = false
 
