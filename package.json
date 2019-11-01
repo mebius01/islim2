@@ -13,6 +13,7 @@
     "jw-vue-pagination": "^1.0.3",
     "vue": "^2.6.10",
     "vue-range-component": "^1.0.3",
+    "vue-range-slider": "^0.6.0",
     "vue-select": "^3.2.0",
     "vue-sorted-table": "^1.1.1"
   },

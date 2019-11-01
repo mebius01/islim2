@@ -4,18 +4,13 @@
       <div class="filters">
         <div class="price">
           <span class="name_filter">Price</span>
-          <form action="" name="price">
-            <input class="min" :min="value[0]" type="number" placeholder="min">
-            <input class="max" :max="max" type="number" placeholder="max">
-            <div class="app-content">
-              <vue-range-slider
-              v-model="value"
-              :min="min"
-              :max="max"
-              :enable-cross="created()">
-              </vue-range-slider>
+          <input type="range" :min="MinMaxPrice.min" v-model="value[0]">
+          <input type="range" :max="MinMaxPrice.max" v-model="value[1]"> 
+          <input class="min" :min="MinMaxPrice.min" type="number" v-model="value[0]"/>
+          <input class="max" :max="MinMaxPrice.max" type="number" v-model="value[1]"/>
         </div>
-          </form>
+        <div v-for="item in TestMinMax()" :key="item.id">
+          {{ item.price }}
         </div>
         <div class="gender">
           <span class="name_filter">Gender</span>
@@ -257,8 +252,8 @@
 
 <script>
 import db from '../assets/db.json'
-import 'vue-range-component/dist/vue-range-slider.css'
-import VueRangeSlider from 'vue-range-component'
+// import 'vue-range-component/dist/vue-range-slider.css'
+// import VueRangeSlider from 'vue-range-component'
 
 const customLabels = {
   previous: '<',
@@ -266,13 +261,15 @@ const customLabels = {
 }
 
 export default {
-  components: {'vue-range-slider': VueRangeSlider},
+  // components: {'vue-range-slider': VueRangeSlider},
   name: 'Catalog',
   props: ['search'],
   data () {
     return {
       customLabels,
       value: [],
+      min: 0,
+      max: 100,
       pageOfItems: [],
       db: db.products,
       visible_category: true,
@@ -339,13 +336,14 @@ export default {
     },
     onChangePage(pageOfItems) {
       // update page of items
-      this.pageOfItems = pageOfItems;
+      this.pageOfItems = pageOfItems
     },
-    created() {
-      this.min = this.MinMaxPrice[0]
-      this.max = this.MinMaxPrice[1]
-      this.enableCross = true
-      console.log('MinMax', {min: this.min, max:this.max})
+    TestMinMax (a, b) {
+      a = this.value[0]
+      b = this.value[1]
+      return this.computedProducts.filter(function (e) {
+          return e.price >= a && e.price <= b })
+      // console.log('MinMax', {MinMax: this.TestMinMax})
     }
 // {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
 // {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
@@ -372,7 +370,9 @@ export default {
     productMaterial () {
       return [...new Set(this.db.map(({ material }) => material))]
     },
-    computedProducts () {
+    computedProducts (a, b) {
+      a = this.value[0]
+      b = this.value[1]
       return this.db.filter((item) => {
         return (this.search.length === 0 || item.name.includes(this.search.toUpperCase())) &&
         (this.color.length === 0 || this.color.includes(item.color)) &&
@@ -383,11 +383,11 @@ export default {
         (this.style.length === 0 || this.style.includes(item.style)) &&
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
-        })
+        }).filter(function (e) {return e.price >= a && e.price <= b })
     },
     MinMaxPrice() {
-      return [this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1),
-      this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1)]
+      return {min: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1),
+      max: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1)}
     }
   }
 }
@@ -401,19 +401,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-.pagination {
-  justify-self: center;
-  grid-area: paginator;
-}
-
-.page-item .page-number .active{
-    background: #4A5E69;
-}
-.pagination a:hover{
-    background: #4A5E69;
-}
-
 a {
   cursor: pointer;
 }
