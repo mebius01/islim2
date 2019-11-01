@@ -5,18 +5,17 @@
         <div class="price">
           <span class="name_filter">Price</span>
           <form action="" name="price">
-            <input class="min" type="number" placeholder="min">
-            <input class="max" type="number" placeholder="max">
+            <input class="min" :min="value[0]" type="number" placeholder="min">
+            <input class="max" :max="max" type="number" placeholder="max">
+            <div class="app-content">
+              <vue-range-slider
+              v-model="value"
+              :min="min"
+              :max="max"
+              :enable-cross="created()">
+              </vue-range-slider>
+        </div>
           </form>
-          <range-slider
-            class="slider"
-            min="10"
-            max="1000"
-            step="10"
-            v-model="sliderValue">
-          </range-slider>
-        {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
-        {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
         </div>
         <div class="gender">
           <span class="name_filter">Gender</span>
@@ -250,7 +249,7 @@
       @changePage="onChangePage"
       :disableDefaultStyles="true"
       :labels="customLabels"
-      :pageSize="3"
+      :pageSize="18"
       :maxPages="10">
     </jw-pagination>
   </div>
@@ -258,6 +257,8 @@
 
 <script>
 import db from '../assets/db.json'
+import 'vue-range-component/dist/vue-range-slider.css'
+import VueRangeSlider from 'vue-range-component'
 
 const customLabels = {
   previous: '<',
@@ -265,11 +266,13 @@ const customLabels = {
 }
 
 export default {
+  components: {'vue-range-slider': VueRangeSlider},
   name: 'Catalog',
   props: ['search'],
   data () {
     return {
       customLabels,
+      value: [],
       pageOfItems: [],
       db: db.products,
       visible_category: true,
@@ -337,7 +340,15 @@ export default {
     onChangePage(pageOfItems) {
       // update page of items
       this.pageOfItems = pageOfItems;
+    },
+    created() {
+      this.min = this.MinMaxPrice[0]
+      this.max = this.MinMaxPrice[1]
+      this.enableCross = true
+      console.log('MinMax', {min: this.min, max:this.max})
     }
+// {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
+// {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
   },
   computed: {
     productCategories () {
@@ -373,6 +384,10 @@ export default {
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
         })
+    },
+    MinMaxPrice() {
+      return [this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1),
+      this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1)]
     }
   }
 }
