@@ -4,13 +4,15 @@
       <div class="filters">
         <div class="price">
           <span class="name_filter">Price</span>
-          <input type="range" :min="MinMaxPrice.min" v-model="value[0]">
-          <input type="range" :max="MinMaxPrice.max" v-model="value[1]"> 
-          <input class="min" :min="MinMaxPrice.min" type="number" v-model="value[0]"/>
-          <input class="max" :max="MinMaxPrice.max" type="number" v-model="value[1]"/>
+          <form>
+            <input type="range" :min="MinMaxPrice.min" v-model="value[0]">
+            <input type="range" :max="MinMaxPrice.max" v-model="value[1]">
+            <input class="min" :min="MinMaxPrice.min" type="number" v-model="value[0]"/>
+            <input class="max" :max="MinMaxPrice.max" type="number" v-model="value[1]"/>
+          </form>
         </div>
-        <div v-for="item in TestMinMax()" :key="item.id">
-          {{ item.price }}
+        <div v-for="item in ProductMinMax" :key="item.id">
+          {{item.name}} - {{ item.price }}
         </div>
         <div class="gender">
           <span class="name_filter">Gender</span>
@@ -240,7 +242,7 @@
       </div>
     </article>
     <jw-pagination
-      :items="computedProducts"
+      :items="ProductMinMax"
       @changePage="onChangePage"
       :disableDefaultStyles="true"
       :labels="customLabels"
@@ -267,9 +269,7 @@ export default {
   data () {
     return {
       customLabels,
-      value: [],
-      min: 0,
-      max: 100,
+      value: [0, 1000],
       pageOfItems: [],
       db: db.products,
       visible_category: true,
@@ -337,13 +337,6 @@ export default {
     onChangePage(pageOfItems) {
       // update page of items
       this.pageOfItems = pageOfItems
-    },
-    TestMinMax (a, b) {
-      a = this.value[0]
-      b = this.value[1]
-      return this.computedProducts.filter(function (e) {
-          return e.price >= a && e.price <= b })
-      // console.log('MinMax', {MinMax: this.TestMinMax})
     }
 // {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
 // {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
@@ -370,9 +363,9 @@ export default {
     productMaterial () {
       return [...new Set(this.db.map(({ material }) => material))]
     },
-    computedProducts (a, b) {
-      a = this.value[0]
-      b = this.value[1]
+    computedProducts () {
+      // a = this.value[0]
+      // b = this.value[1]
       return this.db.filter((item) => {
         return (this.search.length === 0 || item.name.includes(this.search.toUpperCase())) &&
         (this.color.length === 0 || this.color.includes(item.color)) &&
@@ -383,8 +376,15 @@ export default {
         (this.style.length === 0 || this.style.includes(item.style)) &&
         (this.season.length === 0 || this.season.includes(item.season)) &&
         (this.material.length === 0 || this.material.includes(item.material))
-        }).filter(function (e) {return e.price >= a && e.price <= b })
+        })
     },
+    ProductMinMax (a, b) {
+      a = this.value[0]
+      b = this.value[1]
+      return this.computedProducts.filter(function (e) {
+          return e.price >= a && e.price <= b })
+    },
+    // .filter(function (e) {return e.price >= a && e.price <= b })
     MinMaxPrice() {
       return {min: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1),
       max: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1)}
@@ -408,7 +408,6 @@ a {
   display: inline-block;
   margin-bottom: 10px
 }
- 
 .tag_section a{
   cursor: pointer;
   font-style: normal;
