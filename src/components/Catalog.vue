@@ -370,9 +370,6 @@ export default {
     }
   }
 }
-// https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-// https://laracasts.com/discuss/channels/vue/how-to-implement-a-range-filter-like-between-in-sql
-// https://www.fareez.info/blog/pagination-component-using-vuejs/
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -604,9 +601,9 @@ input[type=range]{
   padding-right: 9px;
   padding-left: 2px;
 }
-.card .foot_card, .card .price, .card .name{
-  /* margin-top: 7px;
-  margin-bottom: 7px; */
+.card .foot_card,
+.card .price,
+.card .name {
   margin-left: 12px;
   margin-right: 14px;
 }
@@ -631,32 +628,30 @@ input[type=range]{
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
-  /* identical to box height */
   color: #000000;
   margin-bottom: 4px;
 }
 .paginator {
-    justify-self: center;
-    /* background-color: bisque; */
-    grid-area: paginator;
-    display: inline-block;
-    margin-top: 40px;
-    margin-bottom: 40px;
+  justify-self: center;
+  grid-area: paginator;
+  display: inline-block;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 .paginator a {
-    border: 1px solid #EAF1F4;
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    margin-left: 10px;
-    border-radius: 5px;
-    color: #B0BEC5;
+  border: 1px solid #EAF1F4;
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin-left: 10px;
+  border-radius: 5px;
+  color: #B0BEC5;
 }
 .paginator a.active{
-    background: #4A5E69;
+  background: #4A5E69;
 }
 .paginator a:hover{
-    background: #4A5E69;
+  background: #4A5E69;
 }
 </style>
