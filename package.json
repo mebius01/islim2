@@ -12,7 +12,6 @@
     "core-js": "^3.3.2",
     "jw-vue-pagination": "^1.0.3",
     "vue": "^2.6.10",
-    "vue-dynamic-dropdown": "^1.0.12",
     "vue-range-component": "^1.0.3",
     "vue-range-slider": "^0.6.0",
     "vue-select": "^3.2.0",

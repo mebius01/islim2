@@ -13,10 +13,10 @@
               :max="MinMaxPrice.max"
               :tooltip="'none'"
               :enable-cross="false"
-              :process-style="{ backgroundColor: '#a3a7a8'}">
-                <template v-slot:dot="{ value, focus }">
-                  <div :class="['custom-dot', { focus }]"></div>
-                </template>
+              :process-style="{ backgroundColor: '#A3A7A8'}">
+              <template v-slot:dot="{ value, focus }">
+                <div :class="['custom-dot', { focus }]"></div>
+              </template>
             </vue-slider>
           </form>
         </div>
@@ -196,34 +196,25 @@
             <button class="tag" v-on:click="a.splice(index, 1)">{{i}}<span style="color:#E44747"> x </span></button>
           </div>
         </div>
-        <a @click="gender.splice(0);
-        category.splice(0);
-        color.splice(0);
-        size.splice(0);
-        brend.splice(0);
-        style.splice(0);
-        season.splice(0);
-        material.splice(0)">Clear all</a>
-        <!-- <select name="Sort By">
-          <option>name</option>
-          <option>Price -</option>
-        </select> -->
+        <a
+          @click="gender.splice(0);
+          category.splice(0);
+          color.splice(0);
+          size.splice(0);
+          brend.splice(0);
+          style.splice(0);
+          season.splice(0);
+          material.splice(0)">Clear all
+        </a>
         <select v-model="sortBy">
           <option value="name">Product Name</option>
           <option value="color">Color</option>
           <option value="size">Size</option>
         </select>
-        <!-- <a class="sortby" @click="sortBy_activ = !sortBy_activ">Sort by</a> -->
-        <!-- <div class="sortby" v-show="sortBy_activ"> -->
-          <!-- <br> -->
           | <a  @click="sortPrice_asc()">Price от большего</a>
-          <!-- <br> -->
           | <a  @click="sortPrice_desc()">Price от меньшего</a>
-          <!-- <br> -->
           | <a @click="sortName_asc()">сортировка от A</a>
-          <!-- <br> -->
           | <a @click="sortName_desc()">сортировка от Z</a>
-        <!-- </div> -->
       </div>
       <div class="islim">
         <div v-for="(item, index) in pageOfItems" v-bind:key="index">
@@ -257,8 +248,8 @@
       @changePage="onChangePage"
       :disableDefaultStyles="true"
       :labels="customLabels"
-      :pageSize="18"
-      :maxPages="10">
+      :pageSize="3"
+      :maxPages="3">
     </jw-pagination>
   </div>
 </template>
@@ -273,11 +264,7 @@ const customLabels = {
 
 export default {
   name: 'Catalog',
-  props: {
-    search: {
-      type: String
-    }
-  },
+  props: ['search'],
   data () {
     return {
       customLabels,
@@ -306,61 +293,36 @@ export default {
   },
   methods: {
     OnLove (l) {
-      if (l === true) {
-        this.count--
-      }
-      else {
-        this.count++
-      }
+      if (l === true) {this.count--}
+      else {this.count++}
       this.$emit('love', {count: this.count})
     },
     sortPrice_desc() { // сортировка по убыванию
-      this.db.sort(function(a, b) {
-        return a.price - b.price
-      })
-      console.log("SORT DE", this.computedProducts)
+      this.db.sort(function(a, b) {return a.price - b.price})
     },
     sortPrice_asc() { // сортировка по возрастанию
-      this.db.sort(function(a, b) {
-        return b.price - a.price
-      })
-      console.log("SORT AE", this.computedProducts)
+      this.db.sort(function(a, b) {return b.price - a.price})
     },
     sortName_asc () { // сортировка имени по возрастанию
       this.db.sort(function(a, b) {
-        if (a.name > b.name) {
-          return 1
-        }
-        if (a.name < b.name) {
-          return -1
-        }
+        if (a.name > b.name) {return 1}
+        if (a.name < b.name) {return -1}
       })
     },
     sortName_desc () { // сортировка имени по убыванию
       this.db.sort(function(a, b) {
-        if (b.name > a.name) {
-          return 1
-        }
-        if (b.name < a.name) {
-          return -1
-        }
+        if (b.name > a.name) {return 1}
+        if (b.name < a.name) {return -1}
       })
     },
     onChangePage(pageOfItems) {
       // update page of items
       this.pageOfItems = pageOfItems
-    },
-  //   created() {
-  //   this.min = 0
-  //   this.max = 250
-  //   this.enableCross = false
-  // }
-// {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
-// {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
+    }
   },
   computed: {
     productCategories () {
-      return [...new Set(this.db.map(({ category }) => category))];
+      return [...new Set(this.db.map(({ category }) => category))]
     },
     productColor () {
       return [...new Set(this.db.map(({ color }) => color))]
@@ -398,19 +360,16 @@ export default {
     ProductMinMax (a, b) {
       a = this.value[0]
       b = this.value[1]
-      return this.computedProducts.filter(function (e) {
-          return e.price >= a && e.price <= b })
+      return this.computedProducts.filter(function (e) {return e.price >= a && e.price <= b })
     },
-    // .filter(function (e) {return e.price >= a && e.price <= b })
     MinMaxPrice() {
-      return {min: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1),
-      max: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1)}
+      return {
+        min: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1),
+        max: this.computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1)
+        }
     }
   }
 }
-// .sort(function(a, b) {return b.price - a.price})
-// .sort(function(a, b) {return a.price - b.price})
-
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 // https://laracasts.com/discuss/channels/vue/how-to-implement-a-range-filter-like-between-in-sql
 // https://www.fareez.info/blog/pagination-component-using-vuejs/
@@ -423,16 +382,7 @@ export default {
     height: 100%;
     border-radius: 50%;
     background-color: #000000;
-    /* transition: all .3s; */
   }
-  /* .custom-dot:hover {
-    transform: rotateZ(45deg);
-    background-color: #000000;
-  } */
-  /* .custom-dot.focus {
-    border-radius: 50%;
-    background-color: #000000;
-  } */
 a {
   cursor: pointer;
 }
@@ -520,29 +470,18 @@ a {
   border: 1px solid #C4C4C4;
   background-color: #FFFFFF;
 }
-
-/* Навести мышой на квадрат background color
-.filters .date_filter:hover input ~ .checkmark {
-  background-color: #C4C4C4;
-} */
-
 /* background желтый при checked */
 .filters .date_filter input:checked ~ .checkmark {
   background-color: #FFCA28;
 }
-
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
-
-/* Show the checkmark when checked */
 .filters .date_filter input:checked ~ .checkmark:after {
   display: block;
 }
-
 /* Style для галки */
 .filters .date_filter .checkmark:after {
   left: 6px;
@@ -572,13 +511,6 @@ a {
 .color{
   margin-bottom: 20px;
 }
-/* .price label, .gender label,
-.category label, .size label,
-.brend label, .style label,
-.season label, .material label,
-.color label{
-  margin-top: 10px;
-} */
 .price .count, .gender .count,
 .category .count, .size .count,
 .brend .count, .style .count,
@@ -593,7 +525,6 @@ a {
 input[type=range]{
   width: 100%;
 }
-
 .islim{
   margin-left: 40px;
   display: grid;
@@ -660,7 +591,6 @@ input[type=range]{
   right: 13px;
   color: #A3A3A3;
 }
-
 .sale{
   position: absolute;
   top:12px;
