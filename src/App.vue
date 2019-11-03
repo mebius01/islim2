@@ -1,8 +1,5 @@
 <template>
     <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <!-- <IsLim /> -->
-    <!-- <router-view/> -->
     <div class="head">
         <div class="welcome">
           <p class="leftstr"><a href="">Welcome</a> | <a href="">Sin in</a> | <a href="">Register</a></p>
@@ -96,11 +93,9 @@
 </template>
 
 <script>
-// import Catalog from './components/Catalog.vue'
 
 export default {
   name: 'app',
-  // components: {Catalog},
   data() {
     return {
       ParentcounterLove: null,
@@ -134,9 +129,6 @@ hr{
   color: #B0BEC5;
 }
 #app{
-  /* width: 1130px;
-  margin-left: auto;
-  margin-right: auto; */
   min-height: 100%;
   display: grid;
   grid-template-columns: auto;
@@ -145,17 +137,9 @@ hr{
     "head"
     "bread_crumb"
     "catalog"
-    /* "aside article" */
     "paginator"
     "footer"
-
 }
-  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  /* color: #2d3e4e;
-} */
 .head{
   grid-area: head;
 }
@@ -299,7 +283,6 @@ article{
   grid-area: article;
 }
 footer {
-  /* height: 258px; */
   background-color: #E5E5E5;
   grid-area: footer;
 }
