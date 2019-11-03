@@ -5,15 +5,16 @@
         <div class="price">
           <span class="name_filter">Price</span>
           <form>
-            <input type="range" :min="MinMaxPrice.min" v-model="value[0]">
-            <input type="range" :max="MinMaxPrice.max" v-model="value[1]">
+            <!-- <input type="range" :min="MinMaxPrice.min" v-model="value[0]">
+            <input type="range" :max="MinMaxPrice.max" v-model="value[1]"> -->
             <input class="min" :min="MinMaxPrice.min" type="number" v-model="value[0]"/>
             <input class="max" :max="MinMaxPrice.max" type="number" v-model="value[1]"/>
           </form>
         </div>
-        <div v-for="item in ProductMinMax" :key="item.id">
+        <!-- <div v-for="item in ProductMinMax" :key="item.id">
           {{item.name}} - {{ item.price }}
-        </div>
+        </div> -->
+        <vue-range-slider v-model="value" :min="MinMaxPrice.min" :max="MinMaxPrice.max" :tooltip="'none'" :label-active-style="false"></vue-range-slider>
         <div class="gender">
           <span class="name_filter">Gender</span>
           <br>
@@ -198,9 +199,14 @@
         style.splice(0);
         season.splice(0);
         material.splice(0)">Clear all</a>
-        <select name="Sort By">
-          <option>Price +</option>
+        <!-- <select name="Sort By">
+          <option>name</option>
           <option>Price -</option>
+        </select> -->
+        <select v-model="sortBy">
+          <option value="name">Product Name</option>
+          <option value="color">Color</option>
+          <option value="size">Size</option>
         </select>
         <!-- <a class="sortby" @click="sortBy_activ = !sortBy_activ">Sort by</a> -->
         <!-- <div class="sortby" v-show="sortBy_activ"> -->
@@ -254,8 +260,9 @@
 
 <script>
 import db from '../assets/db.json'
-// import 'vue-range-component/dist/vue-range-slider.css'
-// import VueRangeSlider from 'vue-range-component'
+import 'vue-range-component/dist/vue-range-slider.css'
+import VueRangeSlider from 'vue-range-component'
+
 
 const customLabels = {
   previous: '<',
@@ -265,11 +272,17 @@ const customLabels = {
 export default {
   // components: {'vue-range-slider': VueRangeSlider},
   name: 'Catalog',
-  props: ['search'],
+  // props: ['search'],
+  props: {
+    search: {
+      type: String
+    }
+  },
+  components: {VueRangeSlider},
   data () {
     return {
       customLabels,
-      value: [0, 1000],
+      value: [0, 10200],
       pageOfItems: [],
       db: db.products,
       visible_category: true,
@@ -337,7 +350,12 @@ export default {
     onChangePage(pageOfItems) {
       // update page of items
       this.pageOfItems = pageOfItems
-    }
+    },
+  //   created() {
+  //   this.min = 0
+  //   this.max = 250
+  //   this.enableCross = false
+  // }
 // {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(0,1) }}
 // {{computedProducts.map(a => a.price).sort(function(a, b){ return a-b;}).slice(-1) }}
   },
@@ -401,6 +419,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.vue-range-slider.slider-component .slider .slider-dot.slider-always .slider-tooltip-wrap {
+  display: none;
+}
 a {
   cursor: pointer;
 }
