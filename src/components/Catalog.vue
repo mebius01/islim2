@@ -4,17 +4,22 @@
       <div class="filters">
         <div class="price">
           <span class="name_filter">Price</span>
-          <form>
-            <!-- <input type="range" :min="MinMaxPrice.min" v-model="value[0]">
-            <input type="range" :max="MinMaxPrice.max" v-model="value[1]"> -->
+          <form class="price_range">
             <input class="min" :min="MinMaxPrice.min" type="number" v-model="value[0]"/>
             <input class="max" :max="MinMaxPrice.max" type="number" v-model="value[1]"/>
+            <vue-slider
+              v-model="value"
+              :min="MinMaxPrice.min"
+              :max="MinMaxPrice.max"
+              :tooltip="'none'"
+              :enable-cross="false"
+              :process-style="{ backgroundColor: '#a3a7a8'}">
+                <template v-slot:dot="{ value, focus }">
+                  <div :class="['custom-dot', { focus }]"></div>
+                </template>
+            </vue-slider>
           </form>
         </div>
-        <!-- <div v-for="item in ProductMinMax" :key="item.id">
-          {{item.name}} - {{ item.price }}
-        </div> -->
-        <vue-range-slider v-model="value" :min="MinMaxPrice.min" :max="MinMaxPrice.max" :tooltip="'none'" :label-active-style="false"></vue-range-slider>
         <div class="gender">
           <span class="name_filter">Gender</span>
           <br>
@@ -260,9 +265,6 @@
 
 <script>
 import db from '../assets/db.json'
-import 'vue-range-component/dist/vue-range-slider.css'
-import VueRangeSlider from 'vue-range-component'
-
 
 const customLabels = {
   previous: '<',
@@ -270,15 +272,12 @@ const customLabels = {
 }
 
 export default {
-  // components: {'vue-range-slider': VueRangeSlider},
   name: 'Catalog',
-  // props: ['search'],
   props: {
     search: {
       type: String
     }
   },
-  components: {VueRangeSlider},
   data () {
     return {
       customLabels,
@@ -419,9 +418,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.vue-range-slider.slider-component .slider .slider-dot.slider-always .slider-tooltip-wrap {
-  display: none;
-}
+.custom-dot {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #000000;
+    /* transition: all .3s; */
+  }
+  /* .custom-dot:hover {
+    transform: rotateZ(45deg);
+    background-color: #000000;
+  } */
+  /* .custom-dot.focus {
+    border-radius: 50%;
+    background-color: #000000;
+  } */
 a {
   cursor: pointer;
 }
@@ -460,6 +471,9 @@ a {
   line-height: 26px;
   text-decoration-line: underline;
   color: #9AA2A9;
+}
+.price_range {
+  margin-bottom: 20px;
 }
 .max, .min{
   width: 100px;
