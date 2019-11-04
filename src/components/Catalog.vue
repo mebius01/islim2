@@ -206,15 +206,18 @@
           season.splice(0);
           material.splice(0)">Clear all
         </a>
-        <select v-model="sortBy">
-          <option value="name">Product Name</option>
-          <option value="color">Color</option>
-          <option value="size">Size</option>
+
+        <select @change="onChangeSort()" v-model="sortBy">
+          <option value="price_desc">Price от меньшего</option>
+          <option value="price_asc">Price от большего</option>
+          <option value="name_asc">Name A-Z</option>
+          <option value="name_desc">Name Z-A</option>
         </select>
-          | <a  @click="sortPrice_asc()">Price от большего</a>
+        <!-- <v-select :options="options"></v-select> -->
+          <!-- | <a  @click="sortPrice_asc()">Price от большего</a>
           | <a  @click="sortPrice_desc()">Price от меньшего</a>
           | <a @click="sortName_asc()">сортировка от A</a>
-          | <a @click="sortName_desc()">сортировка от Z</a>
+          | <a @click="sortName_desc()">сортировка от Z</a> -->
       </div>
       <div class="islim">
         <div v-for="(item, index) in pageOfItems" v-bind:key="index">
@@ -248,7 +251,7 @@
       @changePage="onChangePage"
       :disableDefaultStyles="true"
       :labels="customLabels"
-      :pageSize="3"
+      :pageSize="10"
       :maxPages="3">
     </jw-pagination>
   </div>
@@ -267,6 +270,10 @@ export default {
   props: ['search'],
   data () {
     return {
+      options: [
+        {label: 'Canada', code: 'ca'},
+        {label: 'USA', code: 'us'}
+        ],
       customLabels,
       value: [0, 10200],
       pageOfItems: [],
@@ -292,6 +299,26 @@ export default {
     }
   },
   methods: {
+    onChangeSort() {
+      if (this.sortBy === 'price_desc') {
+        return this.db.sort(function(a, b) {return a.price - b.price})
+      }
+      if (this.sortBy === 'price_asc') {
+        this.db.sort(function(a, b) {return b.price - a.price})
+      }
+      if (this.sortBy === 'name_desc') {
+        this.db.sort(function(a, b) {
+          if (b.name > a.name) {return 1}
+          if (b.name < a.name) {return -1}
+        })
+      }
+      if (this.sortBy === 'name_asc') {
+        this.db.sort(function(a, b) {
+          if (a.name > b.name) {return 1}
+          if (a.name < b.name) {return -1}
+        })
+      }
+    },
     OnLove (l) {
       if (l === true) {this.count--}
       else {this.count++}
@@ -431,6 +458,7 @@ a {
   line-height: 29px;
   color: #000000;
   margin-bottom: 20px;
+  /* text-align: center; */
 }
 .max{
   float: right;
