@@ -42,7 +42,7 @@
             <div class="logo">
               ISLIM
             </div>
-            <p>contact@leebros.us/p>
+            <p>contact@leebros.us</p>
             <p>+1 (00) 86 868 868 777</p>
             <p>© 2019 ISLIM America Inc.</p>
             <p>
@@ -74,9 +74,10 @@
             CONTACT
           </div>
           <form action="">
-            <input type="text" placeholder="Name">
-            <input type="text" placeholder="Email Address">
-            <button type="submit">OK</button>
+            <input class="contact_name" type="text" placeholder="Name">
+            <br>
+            <input class="contact_email" type="text" placeholder="Email Address">
+            <button class="button_ok" type="submit">OK</button>
           </form>
         </div>
         <div class="pay">
@@ -290,7 +291,6 @@ footer {
   width: var(--global-width);
   margin-left: auto;
   margin-right: auto;
-  margin-top: 18px;
   display: grid;
   grid-template-columns: repeat(5 1fr);
   grid-template-rows: 80% 20%;
@@ -298,21 +298,79 @@ footer {
     "l_foo h_foo a_foo c_foo"
     "pay pay pay pay"
 }
+.logo_foo, .help_foo,
+.acc_foo, .contact_foo {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #444546;
+}
+.help_foo .help,
+.acc_foo .account,
+.contact_foo .contact {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 23px
+}
 .logo_foo{
   grid-area: l_foo;
+  margin-top: 18px;
+}
+.logo_foo .logo {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
 }
 .help_foo{
   grid-area: h_foo;
+  margin-top: 31px;
 }
 .acc_foo{
   grid-area: a_foo;
+  margin-top: 31px;
 }
 .contact_foo{
   grid-area: c_foo;
+  margin-top: 31px;
+}
+.contact_foo input {
+  border: none;
+  background: #FFFFFF;
+  border-radius: 4px;
+  height: 36px;
+  padding-left: 6px;
+  margin-bottom: 15px;
+}
+.contact_foo .contact_name {
+  width: 250px;
+}
+.contact_foo .contact_email {
+  width: 205px;
+  border-radius: 4px 0px 0px 4px;
+}
+.contact_foo button {
+  width: 45px;
+  height: 38px;
+  background: #B0BEC5;
+  border-radius: 0px 4px 4px 0px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  border: none;
 }
 .pay{
   grid-area: pay;
   justify-self: end;
+}
+.pay i {
+  margin-right: 12px;
+  font-size: 22px
 }
 /* ПАГИНАЦИЯ */
 .pagination {
