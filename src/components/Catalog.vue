@@ -55,31 +55,9 @@
               </div>
               <a class="view_more" @click="visible_category=!visible_category">{{visible_category?"View More":"Hide"}}</a>
         </div>
-        <div class="color">
-            <span class="name_filter">Colour</span>
-            <div v-show="visible_color">
-              <div class="color_css" v-for="i in productColor.sort().slice(0,6)" v-bind:key="i.id">
-                <label class="date_filter">
-                  <input type="checkbox" :id="i.id" :value="i" v-model="color">
-                  <span class="checkmark" v-bind:style="{background: i}"></span>
-                </label>
-                <br>
-              </div>
-            </div>
-            <div v-show="!visible_color">
-              <div class="color_css" v-for="i in productColor.sort()" v-bind:key="i.id">
-                <label class="date_filter">
-                  <input type="checkbox" :id="i.id" :value="i" v-model="color">
-                  <span class="checkmark" v-bind:style="{background: i}"></span>
-                </label>
-                <br>
-              </div>
-            </div>
-            <a class="view_more" @click="visible_color=!visible_color">{{visible_color?"View More":"Hide"}}</a>
-        </div>
         <div class="size">
           <span class="name_filter">Size</span>
-          <div v-show="visible_size">
+          <!-- <div v-show="visible_size">
               <div v-for="i in productSize.sort().slice(0,4)" v-bind:key="i.id">
                 <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.size).filter(item => item === i).length}})</span>
                   <input type="checkbox" :id="i.id" :value="i" v-model="size">
@@ -87,17 +65,19 @@
                 </label>
                 <br>
               </div>
-            </div>
-            <div v-show="!visible_size">
-              <div v-for="i in productSize.sort()" v-bind:key="i.id">
-                <label class="date_filter">{{i}} <span class="count">({{db.map(a => a.size).filter(item => item === i).length}})</span>
-                  <input type="checkbox" :id="i.id" :value="i" v-model="size">
-                  <span class="checkmark"></span>
-                </label>
-                <br>
+            </div> -->
+            <!-- <div v-show="!visible_size"> -->
+              <div  class="size_block">
+                <div v-for="i in productSize.sort()" v-bind:key="i.id">
+                  <label class="date_filter">{{i}} <!-- <span class="count">({{db.map(a => a.size).filter(item => item === i).length}})</span> -->
+                    <input type="checkbox" :id="i.id" :value="i" v-model="size">
+                    <span class="checkmark"></span>
+                  </label>
+                  <br>
+                </div>
               </div>
-            </div>
-            <a class="view_more" @click="visible_size=!visible_size">{{visible_size?"View More":"Hide"}}</a>
+            <!-- </div> -->
+            <!-- <a class="view_more" @click="visible_size=!visible_size">{{visible_size?"View More":"Hide"}}</a> -->
         </div>
         <div class="brend">
           <span class="name_filter">Brend</span>
@@ -186,6 +166,28 @@
             </div>
           </div>
             <a class="view_more" @click="visible_material=!visible_material">{{visible_material?"View More":"Hide"}}</a>
+        </div>
+        <div class="color">
+            <span class="name_filter">Colour</span>
+            <div v-show="visible_color">
+              <div class="color_css" v-for="i in productColor.sort().slice(0,6)" v-bind:key="i.id">
+                <label class="date_filter">
+                  <input type="checkbox" :id="i.id" :value="i" v-model="color">
+                  <span class="checkmark" v-bind:style="{background: i}"></span>
+                </label>
+                <br>
+              </div>
+            </div>
+            <div v-show="!visible_color">
+              <div class="color_css" v-for="i in productColor.sort()" v-bind:key="i.id">
+                <label class="date_filter">
+                  <input type="checkbox" :id="i.id" :value="i" v-model="color">
+                  <span class="checkmark" v-bind:style="{background: i}"></span>
+                </label>
+                <br>
+              </div>
+            </div>
+            <a class="view_more" @click="visible_color=!visible_color">{{visible_color?"View More":"Hide"}}</a>
         </div>
       </div>
     </aside>
@@ -411,6 +413,11 @@ a {
   display: inline-block;
   margin-bottom: 10px
 }
+.size_block{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 10px
+}
 .tag_section a{
   cursor: pointer;
   font-style: normal;
@@ -433,15 +440,6 @@ a {
   grid-template-areas:
     "aside article"
     "paginator paginator"
-}
-.view_more{
-  cursor: pointer;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 26px;
-  text-decoration-line: underline;
-  color: #9AA2A9;
 }
 .price_range {
   margin-bottom: 20px;
@@ -543,6 +541,15 @@ a {
   line-height: 26px;
   text-transform: lowercase;
   color: #C4C4C4;
+}
+.view_more{
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 26px;
+  text-decoration-line: underline;
+  color: #9AA2A9;
 }
 input[type=range]{
   width: 100%;

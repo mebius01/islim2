@@ -325,17 +325,24 @@ footer {
   font-size: 36px;
   line-height: 44px;
 }
+.logo_foo i {
+  margin-right: 15px;
+  font-size: 18px
+}
 .help_foo{
   grid-area: h_foo;
   margin-top: 31px;
+  justify-self: center;
 }
 .acc_foo{
   grid-area: a_foo;
   margin-top: 31px;
+  justify-self: center;
 }
 .contact_foo{
   grid-area: c_foo;
   margin-top: 31px;
+  justify-self: end;
 }
 .contact_foo input {
   border: none;
@@ -367,9 +374,10 @@ footer {
 .pay{
   grid-area: pay;
   justify-self: end;
+  color: #444546;
 }
 .pay i {
-  margin-right: 12px;
+  margin-left: 12px;
   font-size: 22px
 }
 /* ПАГИНАЦИЯ */
